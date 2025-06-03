@@ -29,6 +29,12 @@ export default interface IMoviesResponse {
     total_results: number;
 }
 
+export interface IMovieSendData {
+    title: string;
+    poster_path: string;
+    id: number;
+}
+
 export interface IMovieDetailsResponse {
     adult: boolean;
     backdrop_path: string;

@@ -1,34 +1,16 @@
 'use client'
-import React, {useEffect} from 'react';
+import React from 'react';
 import {CircleUser, LogOut, MoveRight, User} from "lucide-react";
 import {Button, Skeleton} from "@/components/ui";
 import {useSession, signOut} from "next-auth/react";
 import Link from "next/link";
-import {userSignIn} from "@/utils/userSignIn";
-import {getUserId} from "@/utils/getUserId";
 import { useRouter } from 'next/navigation';
+import {useUserStore} from "@/store/user";
 
 const UserButton = () => {
     const router = useRouter();
     const session = useSession();
-
-    useEffect(() => {
-        const test = async () => {
-            if (session.data) {
-                await userSignIn(session.data)
-            }
-        }
-        test()
-    }, [session]);
-
-    const onProfileHandle = async () => {
-        if (session?.data?.user?.email) {
-            const result = await getUserId(session.data.user.email)
-            if (result) {
-                router.push(`/profile/${result}`);
-            }
-        }
-    }
+    const user_store = useUserStore(state => state.data)
 
     if (session.status === 'loading') {
         return <Skeleton className={`w-[150px] h-10`}/>;
@@ -49,7 +31,7 @@ const UserButton = () => {
                 </Link>
                 :
                 <div className={`flex items-center gap-2`}>
-                    <Button onClick={onProfileHandle} variant={"secondary"}><CircleUser size={24}/></Button>
+                    <Button onClick={() => router.push(`/profile/${user_store?.id}`)} variant={"secondary"}><CircleUser size={24}/></Button>
                     <Button onClick={() => signOut({callbackUrl: "/"})} variant={"secondary"}><LogOut
                         size={24}/></Button>
                 </div>

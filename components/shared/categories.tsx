@@ -2,9 +2,6 @@
 import React, {useEffect, useState} from 'react';
 import {cn} from "@/lib/utils";
 import {useCategoryStore} from "@/store/category";
-import {Button} from "@/components/ui";
-import Link from "next/link";
-import { SquareArrowUp } from 'lucide-react';
 import UserButton from "@/components/shared/user-button";
 import {ModeToggle} from "@/components/ModeToggle/ModeToggle";
 
@@ -57,22 +54,17 @@ const Categories: React.FC<Props> = ({className}) => {
     }, [active_type]);
 
     return (
-        <div className={`flex gap-4 items-center`}>
-            {scrollY > 100 &&
-                <Link href={`/#header`}>
-                    <Button><SquareArrowUp /></Button>
-                </Link>
-            }
+        <div className={`flex gap-4 items-center  w-full`}>
             {scrollY > 100 &&
                 <div className={`hidden md:block`}>
                     <ModeToggle />
                 </div>
             }
-            <div className={cn(`flex items-center bg-neutral-100 dark:bg-neutral-900 gap-1 p-1 rounded-2xl`, className)}>
+            <div className={cn(`flex items-center p-1 ${scrollY > 100 && 'justify-between'} bg-neutral-100 dark:bg-neutral-900 gap-1 rounded-2xl`, className)}>
                 {
                     cats.map((cat, index) => (
                         <a key={`${index}-${cat}`} href={`/#${cat.toLowerCase().replace(" ", "_")}`}
-                           className={cn('flex items-center font-bold h-10 rounded-2xl px-5', refactored_type === cat && 'bg-neutral-200 dark:bg-neutral-800 text-primary')}>
+                           className={cn(`flex items-center font-bold h-10 rounded-2xl px-4 md:px-8`, refactored_type === cat && 'bg-neutral-200 dark:bg-neutral-800 text-primary')}>
                             <button>
                                 <b className={`text-xs`}>{cat}</b>
                             </button>
