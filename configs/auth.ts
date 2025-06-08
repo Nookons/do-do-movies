@@ -65,7 +65,7 @@ export const authConfig: AuthOptions = {
 
     callbacks: {
         async session({ session, token, user }) {
-            // Можно добавить кастомные поля в session
+            console.log(token);
             return session;
         },
     },
