@@ -18,7 +18,6 @@ const UserObserve = () => {
             if (email) {
                 unsubscribe = getUserObserver(email, (user) => {
                     if (user) {
-                        console.log(user)
                         setUserStore(user);
                     }
                 });

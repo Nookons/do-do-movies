@@ -23,6 +23,8 @@ export const userSignIn = async (props: Session) => {
             name: props.user.name || null,
             image: props.user.image || null,
             updatedAt: serverTimestamp(),
+            type: "otherService",
+            password: "none"
         };
 
         if (docSnap.exists()) {

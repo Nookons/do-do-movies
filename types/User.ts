@@ -8,6 +8,7 @@ interface IList {
 export default interface IUser {
     createdAt: Date;
     email: string;
+    type: string;
     favorite_list?: IList[];
     id: string;
     image: string;
