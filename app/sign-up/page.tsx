@@ -10,7 +10,6 @@ import SignButtonGroup from "@/components/shared/SignIn/SignButtonGroup";
 import EmailInput from "@/components/shared/SignUp/EmailInput";
 import {Label} from "@/components/ui/label";
 import Link from "next/link";
-import {signIn} from "next-auth/react";
 import {useRouter} from "next/navigation";
 
 const Page = () => {
