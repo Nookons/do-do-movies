@@ -2,26 +2,17 @@
 
 import React, {useEffect, useState} from 'react';
 import {Container} from '@/components/shared/container';
-import {IMovieDetailsResponse, IMovieVideosResponse, IVideo} from '@/types/Movie';
+import {ICreditsResponse, IMovieDetailsResponse, IMovieVideosResponse, IVideo} from '@/types/Movie';
 import Image from 'next/image';
 import {Title} from "@/components/shared/title";
-import {
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbLink,
-    BreadcrumbList,
-    BreadcrumbPage,
-    BreadcrumbSeparator
-} from '@/components/ui/breadcrumb';
-import Link from 'next/link';
-import {ChevronsLeft} from "lucide-react";
 import {getMoviesDetails} from "@/components/getMovieDetails";
-import {useRouter} from "next/navigation";
 import {Skeleton} from "@/components/ui";
 import {Badge} from '@/components/ui/badge';
-import UserButton from "@/components/shared/user-button";
 import MovieCardActions from "@/components/shared/movie-card-actions";
 import {getMovieVideos} from "@/utils/movie/getMovieVideos";
+import {getMovieCredits} from "@/utils/movie/getMovieCredits";
+import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";
+import Link from "next/link";
 
 interface MoviePageProps {
     params: Promise<{ id: string }>;
@@ -29,24 +20,11 @@ interface MoviePageProps {
 
 const Page = ({params}: MoviePageProps) => {
     const {id} = React.use(params);
-    const router = useRouter();
 
     const [data, setData] = useState<IMovieDetailsResponse | null>(null)
     const [videos_data, setVideos_data] = useState<IVideo | null>(null)
 
-    const [scrollY, setScrollY] = useState(0);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrollY(window.scrollY || window.pageYOffset);
-        };
-        window.addEventListener('scroll', handleScroll, {passive: true});
-        handleScroll();
-
-        return () => {
-            window.removeEventListener('scroll', handleScroll);
-        };
-    }, []);
+    const [credits_data, setCredits_data] = useState<ICreditsResponse | null>(null)
 
     useEffect(() => {
         if (id) {
@@ -54,6 +32,7 @@ const Page = ({params}: MoviePageProps) => {
                 const data = await getMoviesDetails(id)
                 setData(data as IMovieDetailsResponse);
             }
+
             const fetchVideosData = async () => {
                 const data: IMovieVideosResponse = await getMovieVideos(id)
 
@@ -64,10 +43,21 @@ const Page = ({params}: MoviePageProps) => {
                 }
             }
 
+            const fetchVideosCredits = async () => {
+                const data: ICreditsResponse = await getMovieCredits(id)
+                setCredits_data(data);
+                console.log(data);
+            }
+
             fetchData();
             fetchVideosData();
+            fetchVideosCredits();
         }
     }, [id])
+
+    const creditsHandler = (id: string) => {
+        localStorage.setItem('credit_id', id)
+    }
 
 
     if (!data) {
@@ -79,48 +69,6 @@ const Page = ({params}: MoviePageProps) => {
 
     return (
         <Container className={`relative`}>
-            <div
-                className={`my-4 sticky top-0 z-10 backdrop-blur-2xl p-2 dark:bg-black/0 ${scrollY > 100 && 'dark:bg-black/30'} bg-white/50 flex justify-between gap-2 items-center`}>
-                {scrollY < 100 &&
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link onClick={() => router.back()}
-                                          className={`flex text-xs text-primary justify-center items-center gap-1`}
-                                          href="#"><ChevronsLeft size={16}/> Back</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator/>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link className={`text-xs`} href="/">Home</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator/>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink asChild>
-                                    <Link className={`text-xs`} href="/movies">Movies</Link>
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator/>
-                            <BreadcrumbItem>
-                                <BreadcrumbPage className={`text-md font-bold`}>{data.title}</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                }
-                {scrollY > 100 &&
-                    <div className={`flex w-full items-center justify-between gap-2`}>
-                        <div>
-                            <h1>{data.title}</h1>
-                        </div>
-                        <div>
-                            <UserButton/>
-                        </div>
-                    </div>
-                }
-            </div>
             <div className={`grid grid-cols-1 md:grid-cols-[30vw_1fr] pb-20 gap-4 items-start`}>
                 <div>
                     <Image
@@ -160,8 +108,51 @@ const Page = ({params}: MoviePageProps) => {
                             </div>
                         </div>
                     </div>
+                    <div className={`flex flex-wrap justify-start items-center gap-2`}>
+                        <Carousel
+                            opts={{
+                                align: "start",
+                                loop: true,
+                            }}
+                            className="w-full"
+                        >
+                            {/* Заголовок + Кнопки в одной строке */}
+                            <div className="flex rounded relative items-center justify-between mb-6">
+                                <div className="hidden sm:block">
+                                    <CarouselPrevious className={`absolute top-6.5 left-2`}/>
+                                    <CarouselNext className={`absolute top-6.5 left-12.5`}/>
+                                </div>
+                                <b>Actors:</b>
+                            </div>
+
+                            {/* Содержимое карусели */}
+                            <CarouselContent className="-ml-2">
+                                {credits_data?.cast.map((member, index) => {
+
+                                    if (member.profile_path === null) return null;
+
+                                    return (
+                                        <CarouselItem
+                                            key={index}
+                                            className="pl-2 flex-shrink-0 basis-1/3 sm:basis-1/6 md:basis-1/6 lg:basis-1/8 xl:basis-1/8"
+                                        >
+                                            <Link onClick={() => creditsHandler(member.id.toString())} href={`/credits/${member.id}`} passHref>
+                                                <Image
+                                                    className={`rounded-2xl`}
+                                                    width={250}
+                                                    height={250}
+                                                    src={`https://image.tmdb.org/t/p/w500/${member.profile_path}`}
+                                                    alt="@shadcn"/>
+                                                <span className={`text-xs`}>{member.name}</span>
+                                            </Link>
+                                        </CarouselItem>
+                                    )
+                                })}
+                            </CarouselContent>
+                        </Carousel>
+                    </div>
                     {videos_data &&
-                        <div className="w-full border-t border-white border-dashed p-2">
+                        <div className="w-full border-t border-white border-dashed">
                             <article className={`my-2 font-bold`}>Watch trailer {data.title}</article>
                             <div style={{position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden'}}>
                                 <iframe
