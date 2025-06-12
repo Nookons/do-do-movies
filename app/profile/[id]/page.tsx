@@ -6,8 +6,9 @@ import {useUserStore} from "@/store/user";
 import {AvatarFallback, AvatarImage} from "@/components/ui/avatar";
 import {Title} from '@/components/shared/title';
 import {Badge} from '@/components/ui/badge';
-import {BadgeCheck, BadgeInfo, BookHeart, BookKey, Handshake, Headset, MessageSquareHeart, MoveRight} from 'lucide-react';
+import {BadgeCheck, BadgeInfo, BookKey, Handshake, Headset, MessageSquareHeart, MoveRight} from 'lucide-react';
 import Link from 'next/link';
+import UserList from "@/components/shared/User/UserList";
 
 const Page = () => {
     const store_user = useUserStore((state) => state.data)
@@ -42,20 +43,13 @@ const Page = () => {
                 <Badge className={`text-x`} variant={"secondary"}><BadgeCheck
                     className={`text-green-500`}/> Verified</Badge>
             </div>
-            <div className={`bg-secondary mt-4 rounded p-2 grid grid-cols-3 gap-4 py-4`}>
-                <Button className={`flex flex-col gap-2`} variant={"secondary"}>
-                    <BookHeart className={`text-primary`} />
-                    <p>Favorite</p>
-                </Button>
-                <Button className={`flex flex-col gap-2`} variant={"secondary"}>
-                    <BookHeart className={`text-primary`} />
-                    <p>Watched</p>
-                </Button>
-                <Button className={`flex flex-col gap-2`} variant={"secondary"}>
-                    <BookHeart className={`text-primary`} />
-                    <p>Watch Later</p>
-                </Button>
+
+            <div>
+                <UserList title={`You want watch this is later`} list={store_user.watch_later_list} />
+                <UserList title={`Movies an TV what you liked`} list={store_user.favorite_list} />
+                <UserList title={`You watched this but not liked`} list={store_user.watched_list} />
             </div>
+
             <div className={`bg-secondary mt-4 rounded p-2`}>
                 <Title text={`Customer Support`}/>
 

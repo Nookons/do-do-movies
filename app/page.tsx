@@ -2,6 +2,7 @@ import {Container} from "@/components/shared/container";
 import Filters from "@/components/shared/filters";
 import MovieFetch from "@/components/shared/movie-fetch";
 import { list_type } from "@/types/Lists";
+import SearchMovie from "@/components/shared/SearchMovie/SearchMovie";
 
 
 
@@ -18,7 +19,9 @@ export default function Home() {
                     </div>
 
                     {/*Movies list*/}
-                    <div className={`flex max-w-full overflow-hidden flex-col gap-12`}>
+                    <div className={`flex max-w-full p-1 overflow-hidden flex-col gap-12`}>
+                        <SearchMovie />
+
                         <MovieFetch fetch_type={list_type.now}/>
                         <MovieFetch fetch_type={list_type.popular}/>
                         <MovieFetch fetch_type={list_type.top}/>

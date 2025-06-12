@@ -48,38 +48,38 @@ const MovieGroup: React.FC<Props> = ({className, fetch_type, result}) => {
         <div
             id={fetch_type}
             className={cn(
-                'w-full mx-auto px-4 bg-secondary p-4 rounded overflow-hidden',
+                'relative  w-full mx-auto rounded overflow-hidden',
                 className
             )}
         >
-            <Carousel
-                opts={{
-                    align: "start",
-                    loop: true,
-                }}
-                className="w-full"
-            >
-                {/* Заголовок + Кнопки в одной строке */}
-                <div className="flex bg-secondary p-2 rounded relative items-center justify-between mb-4 px-2">
-                    <div className="">
-                        <CarouselPrevious className={`absolute top-6.5 left-2`} />
-                        <CarouselNext  className={`absolute top-6.5 left-12.5`} />
+            <div className="relative z-10">
+                <Carousel
+                    opts={{
+                        align: "start",
+                        loop: true,
+                    }}
+                    className="w-full"
+                >
+                    <div className="flex p-2 rounded relative items-center justify-between mb-4 px-2">
+                        <div>
+                            <CarouselPrevious className="absolute top-6.5 left-2" />
+                            <CarouselNext className="absolute top-6.5 left-12.5" />
+                        </div>
+                        <article>{getTitle(fetch_type)}</article>
                     </div>
-                    <article>{getTitle(fetch_type)}</article>
-                </div>
 
-                {/* Содержимое карусели */}
-                <CarouselContent className="-ml-2">
-                    {result.map((mov, index) => (
-                        <CarouselItem
-                            key={index}
-                            className="pl-2 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/4 xl:basis-1/4"
-                        >
-                            <MovieCard index={index} movie_data={mov} />
-                        </CarouselItem>
-                    ))}
-                </CarouselContent>
-            </Carousel>
+                    <CarouselContent className="-ml-2">
+                        {result.map((mov, index) => (
+                            <CarouselItem
+                                key={index}
+                                className="pl-2 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/4 xl:basis-1/4"
+                            >
+                                <MovieCard index={index} movie_data={mov} />
+                            </CarouselItem>
+                        ))}
+                    </CarouselContent>
+                </Carousel>
+            </div>
         </div>
     );
 };

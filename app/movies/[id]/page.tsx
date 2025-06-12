@@ -108,7 +108,7 @@ const Page = ({params}: MoviePageProps) => {
                             </div>
                         </div>
                     </div>
-                    <div className={`flex flex-wrap justify-start items-center gap-2`}>
+                    <div className={`flex flex-wrap justify-start items-center gap-2 mt-4`}>
                         <Carousel
                             opts={{
                                 align: "start",
@@ -117,15 +117,14 @@ const Page = ({params}: MoviePageProps) => {
                             className="w-full"
                         >
                             {/* Заголовок + Кнопки в одной строке */}
-                            <div className="flex rounded relative items-center justify-between mb-6">
+                            <div className="flex rounded relative items-center justify-between mb-4">
                                 <div className="hidden sm:block">
-                                    <CarouselPrevious className={`absolute top-6.5 left-2`}/>
-                                    <CarouselNext className={`absolute top-6.5 left-12.5`}/>
+                                    <CarouselPrevious className={`absolute top-2.5 left-2`}/>
+                                    <CarouselNext className={`absolute top-2.5 left-12.5`}/>
                                 </div>
                                 <b>Actors:</b>
                             </div>
 
-                            {/* Содержимое карусели */}
                             <CarouselContent className="-ml-2">
                                 {credits_data?.cast.map((member, index) => {
 
@@ -134,7 +133,7 @@ const Page = ({params}: MoviePageProps) => {
                                     return (
                                         <CarouselItem
                                             key={index}
-                                            className="pl-2 flex-shrink-0 basis-1/3 sm:basis-1/6 md:basis-1/6 lg:basis-1/8 xl:basis-1/8"
+                                            className="pl-2 flex-shrink-0 basis-1/3 sm:basis-1/3 md:basis-1/6 lg:basis-1/6 xl:basis-1/6"
                                         >
                                             <Link onClick={() => creditsHandler(member.id.toString())} href={`/credits/${member.id}`} passHref>
                                                 <Image
@@ -143,7 +142,8 @@ const Page = ({params}: MoviePageProps) => {
                                                     height={250}
                                                     src={`https://image.tmdb.org/t/p/w500/${member.profile_path}`}
                                                     alt="@shadcn"/>
-                                                <span className={`text-xs`}>{member.name}</span>
+                                                <b className={`text-xs`}>{member.name}</b>
+                                                <article className={`text-xs text-neutral-500`}>{member.character}</article>
                                             </Link>
                                         </CarouselItem>
                                     )
