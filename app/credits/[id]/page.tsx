@@ -3,7 +3,7 @@ import {Container} from "@/components/shared/container";
 import React, {useEffect, useState} from "react";
 import {getCreditData} from "@/utils/credit/getCreditData";
 import {ICreditCombine, ICreditDetails} from "@/types/Credit";
-import {Skeleton} from "@/components/ui";
+import {Button, Skeleton} from "@/components/ui";
 import Image from "next/image";
 import {Title} from "@/components/shared/title";
 import {Badge} from "@/components/ui/badge";
@@ -11,9 +11,11 @@ import {getCombineCredits} from "@/utils/credit/getCombineCredits";
 import dayjs from "dayjs";
 import {IMovieResponse} from "@/types/Movie";
 import Link from "next/link";
+import {Ellipsis, EyeOff} from "lucide-react";
 
 const Page = () => {
     const credit_id = localStorage.getItem('credit_id');
+    const [expanded, setExpanded] = useState(false);
 
     const [credit_data, setCredit_data] = useState<ICreditDetails | null>(null)
     const [combine_data, setCombine_data] = useState<IMovieResponse[] | null>(null)
@@ -67,7 +69,18 @@ const Page = () => {
                             <Badge key={index} variant={`secondary`}>{name}</Badge>
                         ))}
                     </div>
-                    <p>{credit_data.biography}</p>
+                    <div className="space-y-2">
+                        <p className={`${expanded ? '' : 'line-clamp-3'}`}>
+                            {credit_data.biography}
+                        </p>
+                        <Button
+                            variant={`link`}
+                            className="underline w-full border mt-2 cursor-pointer"
+                            onClick={() => setExpanded(!expanded)}
+                        >
+                            {expanded ? <EyeOff /> : <Ellipsis />}
+                        </Button>
+                    </div>
                     <div className={`mt-8`}>
                         <b>Other movies:</b>
                         <div className={`grid grid-cols-2 md:grid-cols-4 gap-2 mt-2 pb-20`}>
