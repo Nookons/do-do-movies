@@ -1,7 +1,6 @@
 
-export const searchMovies = async (searchTerm: string) => {
-    const prepared_string = searchTerm.toLowerCase();
 
+export const searchByQuery = async ({genresState, page}: {genresState: string[], page: number}) => {
     const options = {
         method: 'GET',
         headers: {
@@ -11,9 +10,9 @@ export const searchMovies = async (searchTerm: string) => {
     };
 
     try {
-        const res = await fetch(`https://api.themoviedb.org/3/search/movie?query=${prepared_string}&include_adult=false&language=en-US&page=1`, options);
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&page=${page.toString()}&with_genres=${genresState.join(',')}&primary_release_year=2022&vote_count.gte=100`, options);
         const data = await res.json();
-        return data.results;
+        return data;
     } catch (err) {
         console.error(err);
         return null;

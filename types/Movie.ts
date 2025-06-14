@@ -22,7 +22,7 @@ export interface IMovieResponse {
 }
 
 export default interface IMoviesResponse {
-    dates: IDates;
+    dates?: IDates;
     page: number;
     results: IMovieResponse[];
     total_pages: number;

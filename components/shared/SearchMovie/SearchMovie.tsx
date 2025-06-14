@@ -145,14 +145,14 @@ const SearchMovie = () => {
     };
 
     return (
-        <div className="flex gap-2 w-full max-w-2xl mx-auto">
+        <div className="flex gap-2 w-full items-center mx-auto mb-6">
             <div className="relative flex-1">
                 <div className="relative">
                     <Input
                         ref={inputRef}
                         value={searchValue}
                         onChange={(e) => setSearchValue(e.target.value)}
-                        placeholder="Search for movies..."
+                        placeholder="spider man..."
                         className="pr-10"
                         onKeyDown={(e) => e.key === 'Enter' && handleSearchSubmit()}
                         aria-label="Search movies"
