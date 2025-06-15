@@ -1,8 +1,16 @@
 
-interface IList {
+export interface IList {
     id: number;
     poster_path: string;
     title: string;
+}
+
+export interface IListNotFinished {
+    id: number;
+    poster_path: string;
+    title: string;
+    runtime: number;
+    user_runtime: string;
 }
 
 export default interface IUser {
@@ -16,4 +24,5 @@ export default interface IUser {
     updatedAt: Date;
     watch_later_list?: IList[];
     watched_list?: IList[];
+    not_finished?: IListNotFinished[];
 }

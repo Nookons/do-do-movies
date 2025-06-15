@@ -56,7 +56,7 @@ const MovieGroup: React.FC<Props> = ({className, fetch_type, result}) => {
                     <article>{getTitle(fetch_type)}</article>
                 </div>
 
-                <div className={`grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4`}>
+                <div className={`grid gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4`}>
                     {result.map((mov, index) => (
                         <div
                             key={index}

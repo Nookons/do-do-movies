@@ -116,6 +116,23 @@ html {
   scroll-behavior: smooth;
 }
 
+progress::-webkit-progress-bar {
+  background-color: var(--muted); /* Цвет фона прогресс-бара */
+  border-radius: 9999px;
+}
+
+progress::-webkit-progress-value {
+  background-color: var(--primary); /* Цвет заполненной части */
+  border-radius: 9999px;
+}
+
+progress::-moz-progress-bar {
+  background-color: var(--primary); /* Для Firefox */
+  border-radius: 9999px;
+}
+
+
+
 
 @layer base {
   * {

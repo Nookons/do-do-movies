@@ -9,7 +9,7 @@ export const getCombineCredits = async (person_id: string) => {
     };
 
     try {
-        const res = await fetch(`https://api.themoviedb.org/3/person/${person_id}/combined_credits?language=en-US`, options);
+        const res = await fetch(`https://api.themoviedb.org/3/person/${person_id}/movie_credits?language=en-US`, options);
         if (!res.ok) {
             throw new Error(`TMDB API error: ${res.status} ${res.statusText}`);
         }

@@ -4,16 +4,17 @@ import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious}
 import Link from "next/link";
 import Image from "next/image";
 import {ExternalLink} from "lucide-react";
+import IUser from "@/types/User";
 
 interface Props {
     list: IMovieSendData[] | undefined;
     title: string;
+    type: string;
+    store_user: IUser;
 }
 
-const UserList: React.FC<Props> = ({list, title}) => {
-
+const UserList: React.FC<Props> = ({list, title, type, store_user}) => {
     if (list == undefined) return null;
-
     if (list.length <= 0) return null;
 
     return (
@@ -27,12 +28,12 @@ const UserList: React.FC<Props> = ({list, title}) => {
             {/* Заголовок + Кнопки в одной строке */}
             <div className="flex rounded relative items-center justify-between mb-2">
                 <div className="hidden sm:block">
-                    <CarouselPrevious className={`absolute top-2.5 left-2`}/>
-                    <CarouselNext className={`absolute top-2.5 left-12.5`}/>
+                    <CarouselPrevious className={`absolute top-1.5 left-2`}/>
+                    <CarouselNext className={`absolute top-1.5 left-12.5`}/>
                 </div>
                 <div className={`flex items-center gap-2`}>
                     <b className={`text-xs text-neutral-500`}>{title} ({list.length})</b>
-                    <Link href="/">
+                    <Link href={`/profile/${store_user.id}/${type}`}>
                         <ExternalLink className={`text-primary hover:text-neutral-500 transition`} size={18} />
                     </Link>
                 </div>
@@ -55,7 +56,7 @@ const UserList: React.FC<Props> = ({list, title}) => {
                                     height={250}
                                     src={`https://image.tmdb.org/t/p/w500/${mov.poster_path}`}
                                     alt="@shadcn"/>
-                                <b className={`text-xs`}>{mov.title}</b>
+                                <b className={`text-xs mt-2 line-clamp-1`}>{mov.title}</b>
                             </Link>
                         </CarouselItem>
                     )

@@ -26,8 +26,6 @@ export default function Home() {
                     {/*View ports*/}
                     <div>
                         <MovieFetch fetch_type={list_type.now}/>
-                        <MovieFetch fetch_type={list_type.popular}/>
-                        <MovieFetch fetch_type={list_type.top}/>
                     </div>
                 </div>
             </Container>

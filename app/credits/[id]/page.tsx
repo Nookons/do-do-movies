@@ -75,7 +75,7 @@ const Page = () => {
                         </p>
                         <Button
                             variant={`link`}
-                            className="underline w-full border mt-2 cursor-pointer"
+                            className="underline w-full cursor-pointer"
                             onClick={() => setExpanded(!expanded)}
                         >
                             {expanded ? <EyeOff /> : <Ellipsis />}

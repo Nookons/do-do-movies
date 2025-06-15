@@ -44,10 +44,10 @@ const Page = () => {
                     className={`text-green-500`}/> Verified</Badge>
             </div>
 
-            <div>
-                <UserList title={`You want watch this is later`} list={store_user.watch_later_list} />
-                <UserList title={`Movies an TV what you liked`} list={store_user.favorite_list} />
-                <UserList title={`You watched this but not liked`} list={store_user.watched_list} />
+            <div className={`flex flex-col gap-4`}>
+                <UserList type={'watch_later'} store_user={store_user} title={`You want watch this is later`} list={store_user.watch_later_list} />
+                <UserList type={'favorite'} store_user={store_user} title={`Movies what you liked`} list={store_user.favorite_list} />
+                <UserList type={'watched_list'} store_user={store_user} title={`You just watched this`} list={store_user.watched_list} />
             </div>
 
             <div className={`bg-secondary mt-4 rounded p-2`}>
