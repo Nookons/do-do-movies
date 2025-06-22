@@ -1,6 +1,11 @@
+interface ISearchParamsObj {
+    fromYear: string | null;
+    toYear: string | null;
+    genresParse: number[];
+    page: number | undefined;
+}
 
-
-export const searchByQuery = async ({genresState, page}: {genresState: string[], page: number}) => {
+export const searchByQuery = async ({ obj }: { obj: ISearchParamsObj }) => {
     const options = {
         method: 'GET',
         headers: {
@@ -9,12 +14,26 @@ export const searchByQuery = async ({genresState, page}: {genresState: string[],
         }
     };
 
+    const from = obj.fromYear ? `${obj.fromYear}-01-01` : undefined;
+    const to = obj.toYear ? `${obj.toYear}-01-01` : undefined;
+
+    const query = new URLSearchParams({
+        language: 'en-US',
+        sort_by: 'popularity.desc',
+        include_adult: 'false',
+        page: String(obj.page ?? 1),
+        with_genres: obj.genresParse.join(','),
+        'vote_count.gte': '0',
+        ...(from ? { 'primary_release_date.gte': from } : {}),
+        ...(to ? { 'primary_release_date.lte': to } : {})
+    }).toString();
+
     try {
-        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&page=${page.toString()}&with_genres=${genresState.join(',')}&primary_release_year=2022&vote_count.gte=100`, options);
+        const res = await fetch(`https://api.themoviedb.org/3/discover/movie?${query}`, options);
         const data = await res.json();
         return data;
     } catch (err) {
         console.error(err);
         return null;
     }
-}
+};

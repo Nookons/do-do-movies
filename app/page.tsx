@@ -14,11 +14,11 @@ export default function Home() {
                 <div className={`grid grid-cols-1 gap-[20px]`}>
 
                     <div className={`w-full flex justify-end`}>
-                        <Link href="/search">
-                            <Button className={`group relative`}>
-                                <TextSearch className={`group-hover:opacity-100 opacity-0 absolute -translate-x-2 group-hover:-translate-x-11 transition duration-300`} />
-                                <Search className={`block group-hover:translate-x-2 group-hover:opacity-0 transition duration-300`} />
-                                Go to Search
+                        <Link className={`w-full`} href="/search">
+                            <Button className={`group w-full relative`}>
+                                <TextSearch className={`group-hover:opacity-100 opacity-0 absolute -translate-x-4 group-hover:-translate-x-16 transition duration-300`} />
+                                <Search className={`block group-hover:translate-x-16 group-hover:opacity-0 transition duration-300`} />
+                                <span className={`text-lg font-semibold`}>Go to Search</span>
                             </Button>
                         </Link>
                     </div>

@@ -13,12 +13,12 @@ export interface FilterCheckboxProps {
 export const FilterCheckbox: React.FC<FilterCheckboxProps> = ({text, value, endAdornment, onCheckedChange, checked, name,}) => {
 
     return (
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center group hover:bg-secondary/70 cursor-pointer p-2 rounded transition space-x-2">
             <Checkbox
                 onCheckedChange={onCheckedChange}
                 checked={checked}
                 value={value}
-                className="rounded-[6px] w-6 h-6"
+                className="rounded-[6px] cursor-pointer w-6 h-6"
                 id={`checkbox-${name}-${String(value)}`}
             />
             <label

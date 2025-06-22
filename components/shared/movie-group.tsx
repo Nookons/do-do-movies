@@ -57,14 +57,17 @@ const MovieGroup: React.FC<Props> = ({className, fetch_type, result}) => {
                 </div>
 
                 <div className={`grid gap-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4`}>
-                    {result.map((mov, index) => (
-                        <div
-                            key={index}
-                            className="pl-2 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/4 xl:basis-1/4"
-                        >
-                            <MovieCard index={index} movie_data={mov}/>
-                        </div>
-                    ))}
+                    {result.map((mov, index) => {
+
+                        return (
+                            <div
+                                key={index}
+                                className="pl-2 flex-shrink-0 basis-full sm:basis-1/2 md:basis-1/2 lg:basis-1/4 xl:basis-1/4"
+                            >
+                                <MovieCard key={`${index}-${mov.id}`} index={index} movie_data={mov}/>
+                            </div>
+                        )
+                    })}
                 </div>
             </div>
         </div>

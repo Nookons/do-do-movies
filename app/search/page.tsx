@@ -1,49 +1,60 @@
 'use client'
-import React, {useEffect, useState} from 'react';
-import {Container} from "@/components/shared/container";
+import React, {useCallback, useEffect, useState} from 'react';
+import { Container } from "@/components/shared/container";
 import GenresGroup from "@/components/shared/genresGroup";
-import {Alert, Pagination, Skeleton} from "@/components/ui";
-import {useHomeState} from "@/store/homeState";
-import {searchByQuery} from "@/utils/Search/searchByQuery";
+import SearchDates from "@/components/shared/SearchMovie/SearchDates";
+import SearchMovie from "@/components/shared/SearchMovie/SearchMovie";
 import MovieGroup from "@/components/shared/movie-group";
 import {list_type} from "@/types/Lists";
+import {Alert, Button, Pagination, Skeleton} from "@/components/ui";
+import {searchByQuery} from "@/utils/Search/searchByQuery";
+import IMoviesResponse from '@/types/Movie';
+import { AlertCircleIcon } from 'lucide-react';
+import {AlertDescription, AlertTitle} from "@/components/ui/alert";
 import {
     PaginationContent,
     PaginationItem,
-    PaginationLink, PaginationNext,
+    PaginationLink,
+    PaginationNext,
     PaginationPrevious
-} from '@/components/ui/pagination';
-import SearchMovie from "@/components/shared/SearchMovie/SearchMovie";
-import {Angry} from 'lucide-react';
-import {AlertDescription, AlertTitle} from "@/components/ui/alert";
+} from "@/components/ui/pagination";
 
 const Page = () => {
-    const data = useHomeState(state => state.data);
-    const setFilteredMovie = useHomeState(state => state.setFilteredMovie);
-
+    const [data, setData] = useState<IMoviesResponse | null>(null)
 
     const [page, setPage] = useState(1)
-    const [genresState, setGenresState] = useState<string[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(true)
 
-    const [isLoading, setIsLoading] = useState(false)
+    const onUpdateHandler = useCallback(async () => {
+        const genres = localStorage.getItem("genres");
+        const fromYear = localStorage.getItem("fromYear");
+        const toYear = localStorage.getItem("toYear");
 
+        const genresParse: number[] = JSON.parse(genres || '[]'); // safer fallback
+
+        const obj = {
+            genresParse,
+            fromYear,
+            toYear,
+            page,
+        };
+
+        try {
+            setIsLoading(true);
+            const result = await searchByQuery({ obj });
+            setData(result);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    }, [page]);
 
     useEffect(() => {
-        const searchHandler = async () => {
-            try {
-                setIsLoading(true)
-                const result = await searchByQuery({genresState, page})
-                setFilteredMovie(result);
-            } catch (error) {
-                console.log(error)
-            } finally {
-                setTimeout(() => setIsLoading(false), 1000)
-            }
-        }
+        onUpdateHandler();
+    }, [onUpdateHandler]);
 
-        searchHandler()
-    }, [page, genresState, setFilteredMovie])
-
+    if (!data) return null;
 
     const buttonHandler = (type: string) => {
         if (type === 'previous') {
@@ -59,77 +70,81 @@ const Page = () => {
 
     return (
         <Container>
-            <div className={`grid`}>
-                <GenresGroup setGenresState={setGenresState}/>
-                <SearchMovie />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="md:col-span-8">
+                    <SearchMovie />
+                </div>
+
+                <div className="md:col-span-2 grid gap-6 grid-cols-1 md:grid-cols-[400px_1fr]">
+                    <SearchDates />
+                    <div>
+                        <GenresGroup />
+                    </div>
+                </div>
             </div>
-
-            {!isLoading
-                ?
-                <div>
-                    {data.results.length < 1
-                        ?
-                        <Alert className={`mt-4`}>
-                            <Angry size={16} />
-                            <AlertTitle>We really tried our best</AlertTitle>
-                            <AlertDescription>
-                                We&apos;re sorry, but we can&apos;t find some movies for this filter option.
-                            </AlertDescription>
-                        </Alert>
+            <div>
+                <Button className={`w-full`} onClick={onUpdateHandler}>Update List</Button>
+            </div>
+            <div>
+                {isLoading
+                    ?
+                    <div className={`grid gap-4 my-4 grid-cols-2 md:grid-cols-2 lg:grid-cols-4`}>
+                        {Array.from({length: 20}).map((_, i) => (
+                            <Skeleton key={i} className={`w-full h-[250px] md:h-150`} />
+                        ))}
+                    </div>
+                    :
+                    <div>
+                        {data?.results.length
+                        ? <MovieGroup fetch_type={list_type.popular} result={data.results} />
                         :
-                        <div>
-                            <MovieGroup fetch_type={list_type.popular} result={data.results}/>
-                            <Pagination className={`py-4`}>
-                                <PaginationContent>
-                                    {data.total_pages > 1 &&
-                                        <PaginationItem>
-                                            <PaginationPrevious onClick={() => buttonHandler('previous')} href="#"/>
-                                        </PaginationItem>
-                                    }
-
-                                    {Array.from({length: data.total_pages}).slice(0, 5).map((_, index) => {
-                                        const pageNumber = page - 1 + index; // центрована навколо поточної сторінки
-
-                                        if (pageNumber < 1 || pageNumber > data.total_pages) return null;
-
-                                        return (
-                                            <PaginationItem key={pageNumber}>
-                                                <PaginationLink
-                                                    onClick={() => setPage(pageNumber)}
-                                                    href="#"
-                                                    isActive={page === pageNumber}
-                                                >
-                                                    {pageNumber}
-                                                </PaginationLink>
-                                            </PaginationItem>
-                                        );
-                                    })}
-
-
-                                    {/*   {data.total_pages > 5 &&
+                            <Alert className="mt-4" variant="destructive">
+                                <AlertCircleIcon />
+                                <AlertTitle>No matching movies found.</AlertTitle>
+                                <AlertDescription>
+                                    <p>Try changing your search criteria and give it another go.</p>
+                                </AlertDescription>
+                            </Alert>
+                        }
+                    </div>
+                }
+                <div>
+                    <Pagination className={`py-4`}>
+                        <PaginationContent>
+                            {data.total_pages > 1 &&
                                 <PaginationItem>
-                                    <PaginationEllipsis />
+                                    <PaginationPrevious onClick={() => buttonHandler('previous')} href="#"/>
                                 </PaginationItem>
-                            }*/}
+                            }
 
-                                    {data.total_pages > 1 &&
-                                        <PaginationItem>
-                                            <PaginationNext onClick={() => buttonHandler('next')} href="#"/>
-                                        </PaginationItem>
-                                    }
-                                </PaginationContent>
-                            </Pagination>
-                        </div>
-                    }
+                            {Array.from({length: data.total_pages}).slice(0, 5).map((_, index) => {
+                                const pageNumber = page - 1 + index; // центрована навколо поточної сторінки
 
+                                if (pageNumber < 1 || pageNumber > data.total_pages) return null;
+
+                                return (
+                                    <PaginationItem key={pageNumber}>
+                                        <PaginationLink
+                                            onClick={() => setPage(pageNumber)}
+                                            href="#"
+                                            isActive={page === pageNumber}
+                                        >
+                                            {pageNumber}
+                                        </PaginationLink>
+                                    </PaginationItem>
+                                );
+                            })}
+
+
+                            {data.total_pages > 1 &&
+                                <PaginationItem>
+                                    <PaginationNext onClick={() => buttonHandler('next')} href="#"/>
+                                </PaginationItem>
+                            }
+                        </PaginationContent>
+                    </Pagination>
                 </div>
-                :
-                <div className={`grid py-4 gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-4`}>
-                    {Array.from({length: 20}).map((_, index) => (
-                        <Skeleton key={index} className={`w-full h-150`} />
-                    ))}
-                </div>
-            }
+            </div>
         </Container>
     );
 };

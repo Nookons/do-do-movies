@@ -29,13 +29,27 @@ const MovieCard: React.FC<Props> = ({className, movie_data}) => {
                         href={`/movies/${movie_data.id}`}
                     >
                         <div className="flex justify-center rounded-lg overflow-hidden">
-                            <Image
-                                className="rounded transition-all duration-300 group-hover:scale-105"
-                                width={750}
-                                height={750}
-                                src={`https://image.tmdb.org/t/p/w500${movie_data.poster_path}`}
-                                alt={movie_data.title || "Movie.ts poster"}
-                            />
+                            {
+                                movie_data.poster_path
+                                    ?
+                                    <Image
+                                        className={`rounded transition-all duration-300 group-hover:scale-105`}
+                                        width={750}
+                                        height={750}
+                                        src={`https://image.tmdb.org/t/p/w500${movie_data.poster_path}`}
+                                        alt={movie_data.title || "Movie.ts poster"}
+                                    />
+                                    :
+                                    <div className={`h-full flex justify-center items-center`}>
+                                        <Image
+                                            className={`rounded transition-all duration-300 group-hover:scale-105`}
+                                            width={750}
+                                            height={750}
+                                            src={`https://fdb-tools.ru/img/noimg.png`}
+                                            alt={movie_data.title || "Movie.ts poster"}
+                                        />
+                                    </div>
+                            }
                         </div>
                     </Link>
                 </HoverCardTrigger>
@@ -49,7 +63,7 @@ const MovieCard: React.FC<Props> = ({className, movie_data}) => {
                             />
                             <MovieCardActions movie_data={movie_data}/>
                         </div>
-                            <span className="text-[12px] flex gap-1 items-center text-primary text-nowrap">
+                        <span className="text-[12px] flex gap-1 items-center text-primary text-nowrap">
                                 <Flame size={12}/> {movie_data.popularity.toFixed(1)}
                             </span>
                         <p className={`text-x`}>{movie_data.overview}</p>

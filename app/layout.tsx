@@ -5,6 +5,7 @@ import {ThemeProvider} from "@/components/theme-provider";
 import Header from "@/components/shared/header";
 import Providers from "@/components/provider";
 import { Toaster } from "sonner";
+import Footer from "@/components/shared/footer";
 
 const nunito = Nunito({
     variable: '--font-nunito',
@@ -34,6 +35,7 @@ export default function RootLayout({children}: { children: React.ReactNode }) {
                         <main className={`min-h-screen px-4`}>
                             <Header/>
                             {children}
+                            <Footer/>
                         </main>
                     </Providers>
                 </ThemeProvider>
