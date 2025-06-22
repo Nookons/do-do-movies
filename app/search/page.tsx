@@ -1,10 +1,10 @@
 'use client'
 import React, {useCallback, useEffect, useState} from 'react';
-import { Container } from "@/components/shared/container";
-import GenresGroup from "@/components/shared/genresGroup";
-import SearchDates from "@/components/shared/SearchMovie/SearchDates";
-import SearchMovie from "@/components/shared/SearchMovie/SearchMovie";
-import MovieGroup from "@/components/shared/movie-group";
+import { Container } from "@/shared/container";
+import GenresGroup from "@/shared/genresGroup";
+import SearchDates from "@/shared/SearchMovie/SearchDates";
+import SearchMovie from "@/shared/SearchMovie/SearchMovie";
+import MovieGroup from "@/shared/movie-group";
 import {list_type} from "@/types/Lists";
 import {Alert, Button, Pagination, Skeleton} from "@/components/ui";
 import {searchByQuery} from "@/utils/Search/searchByQuery";

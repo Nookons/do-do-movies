@@ -2,8 +2,8 @@
 import React, {useEffect, useState} from 'react';
 import {cn} from "@/lib/utils";
 import {useCategoryStore} from "@/store/category";
-import UserButton from "@/components/shared/user-button";
-import {ModeToggle} from "@/components/ModeToggle/ModeToggle";
+import UserButton from "@/shared/user-button";
+import {ModeToggle} from "@/shared/ModeToggle/ModeToggle";
 
 interface Props {
     className?: string;

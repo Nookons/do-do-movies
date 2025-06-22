@@ -1,14 +1,14 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import {Container} from '@/components/shared/container';
+import {Container} from '@/shared/container';
 import {ICreditsResponse, IMovieDetailsResponse, IMovieVideosResponse, IVideo} from '@/types/Movie';
 import Image from 'next/image';
-import {Title} from "@/components/shared/title";
-import {getMoviesDetails} from "@/components/getMovieDetails";
+import {Title} from "@/shared/title";
+import {getMoviesDetails} from "@/features/getMovieDetails";
 import {Button, Input, Skeleton} from "@/components/ui";
 import {Badge} from '@/components/ui/badge';
-import MovieCardActions from "@/components/shared/movie-card-actions";
+import MovieCardActions from "@/shared/movie-card-actions";
 import {getMovieVideos} from "@/utils/movie/getMovieVideos";
 import {getMovieCredits} from "@/utils/movie/getMovieCredits";
 import {Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious} from "@/components/ui/carousel";

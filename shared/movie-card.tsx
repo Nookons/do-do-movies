@@ -4,9 +4,9 @@ import Link from "next/link";
 import Image from "next/image";
 import {IMovieResponse} from "@/types/Movie";
 import {Title} from './title';
-import MovieCardActions from "@/components/shared/movie-card-actions";
+import MovieCardActions from "@/shared/movie-card-actions";
 import {Flame} from "lucide-react";
-import {HoverCard, HoverCardContent, HoverCardTrigger} from '../ui/hover-card';
+import {HoverCard, HoverCardContent, HoverCardTrigger} from '../components/ui/hover-card';
 
 interface Props {
     className?: string;

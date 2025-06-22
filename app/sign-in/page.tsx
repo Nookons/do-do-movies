@@ -1,9 +1,9 @@
 'use client'
 
 import React, {FormEventHandler, useState} from 'react';
-import {Container} from "@/components/shared/container";
-import EmailInput from "@/components/shared/SignIn/EmailInput";
-import SignButtonGroup from "@/components/shared/SignIn/SignButtonGroup";
+import {Container} from "@/shared/container";
+import EmailInput from "@/shared/SignIn/EmailInput";
+import SignButtonGroup from "@/shared/SignIn/SignButtonGroup";
 import Link from "next/link";
 import {Button, Input} from "@/components/ui";
 import {LoaderCircle} from "lucide-react";

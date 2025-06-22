@@ -1,6 +1,6 @@
 'use client'
 import React from "react";
-import { Container } from "@/components/shared/container";
+import { Container } from "@/shared/container";
 import Link from "next/link";
 import {useUserStore} from "@/store/user";
 
@@ -8,7 +8,7 @@ const Footer = () => {
     const user = useUserStore(state => state.data)
 
     return (
-        <footer className="text-foreground bg-secondary p-2 rounded-t-2xl mt-10 pb-4">
+        <footer className="text-foreground p-2 rounded-t-2xl mt-10 pb-4">
             <Container>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10">
                     {/* About */}
@@ -40,7 +40,7 @@ const Footer = () => {
                         </p>
                     </div>
                 </div>
-                <div className="pt-6 text-center text-neutral-500 text-sm">
+                <div className="text-center text-neutral-500 text-sm">
                     &copy; {new Date().getFullYear()} DO-DO-Movies. All rights reserved.
                 </div>
             </Container>

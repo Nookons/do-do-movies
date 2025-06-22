@@ -1,11 +1,11 @@
 'use client';
-import {Container} from "@/components/shared/container";
+import {Container} from "@/shared/container";
 import React, {useEffect, useState} from "react";
 import {getCreditData} from "@/utils/credit/getCreditData";
 import {ICreditCombine, ICreditDetails} from "@/types/Credit";
 import {Button, Skeleton} from "@/components/ui";
 import Image from "next/image";
-import {Title} from "@/components/shared/title";
+import {Title} from "@/shared/title";
 import {Badge} from "@/components/ui/badge";
 import {getCombineCredits} from "@/utils/credit/getCombineCredits";
 import dayjs from "dayjs";

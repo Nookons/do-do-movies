@@ -1,10 +1,11 @@
-import {Container} from "@/components/shared/container";
-import MovieFetch from "@/components/shared/movie-fetch";
+import {Container} from "@/shared/container";
+import MovieFetch from "@/shared/movie-fetch";
 import {list_type} from "@/types/Lists";
 import React from "react";
 import {Button} from "@/components/ui";
 import {Search, TextSearch} from "lucide-react";
 import Link from "next/link";
+import IsWatch from "@/widgets/model/isWatch";
 
 export default function Home() {
 
@@ -12,6 +13,10 @@ export default function Home() {
         <>
             <Container className={`pb-14`}>
                 <div className={`grid grid-cols-1 gap-[20px]`}>
+
+                    <div>
+                        <IsWatch />
+                    </div>
 
                     <div className={`w-full flex justify-end`}>
                         <Link className={`w-full`} href="/search">
@@ -22,7 +27,6 @@ export default function Home() {
                             </Button>
                         </Link>
                     </div>
-
                     {/*View ports*/}
                     <div>
                         <MovieFetch fetch_type={list_type.now}/>

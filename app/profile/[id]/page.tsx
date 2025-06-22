@@ -1,14 +1,14 @@
 'use client'
-import {Container} from '@/components/shared/container';
+import {Container} from '@/shared/container';
 import React from 'react';
 import {Avatar, Button, Skeleton} from "@/components/ui";
 import {useUserStore} from "@/store/user";
 import {AvatarFallback, AvatarImage} from "@/components/ui/avatar";
-import {Title} from '@/components/shared/title';
+import {Title} from '@/shared/title';
 import {Badge} from '@/components/ui/badge';
 import {BadgeCheck, BadgeInfo, BookKey, Handshake, Headset, MessageSquareHeart, MoveRight} from 'lucide-react';
 import Link from 'next/link';
-import UserList from "@/components/shared/User/UserList";
+import UserList from "@/shared/User/UserList";
 
 const Page = () => {
     const store_user = useUserStore((state) => state.data)
@@ -50,32 +50,32 @@ const Page = () => {
                 <UserList type={'watched_list'} store_user={store_user} title={`You just watched this`} list={store_user.watched_list} />
             </div>
 
-            <div className={`bg-secondary mt-4 rounded p-2`}>
+            <div className={`mt-4 rounded p-2`}>
                 <Title text={`Customer Support`}/>
 
                 <div className={`flex flex-col gap-4 mt-4`}>
-                    <Button className={`flex justify-between items-center w-full `} variant={"secondary"}>
+                    <Button className={`flex bg-secondary/25 hover:bg-secondary/50 justify-between items-center w-full `} variant={"ghost"}>
                         <div className={`flex items-center gap-2`}>
                             <Headset className={`text-primary`} size={28}/>
                             <p className={`font-bold`}>Help Center & Contact Support</p>
                         </div>
                         <MoveRight className={`text-neutral-500`} size={28}/>
                     </Button>
-                    <Button className={`flex justify-between items-center w-full `} variant={"secondary"}>
+                    <Button className={`flex bg-secondary/25 hover:bg-secondary/50 justify-between items-center w-full `} variant={"ghost"}>
                         <div className={`flex items-center gap-2`}>
                             <BadgeInfo size={28} className={`text-primary`}/>
                             <p className={`font-bold`}>About Us</p>
                         </div>
                         <MoveRight className={`text-neutral-500`} size={28}/>
                     </Button>
-                    <Button className={`flex justify-between items-center w-full `} variant={"secondary"}>
+                    <Button className={`flex bg-secondary/25 hover:bg-secondary/50 justify-between items-center w-full `} variant={"ghost"}>
                         <div className={`flex items-center gap-2`}>
                             <Handshake className={`text-primary`} size={28}/>
                             <p className={`font-bold`}>Rate Us</p>
                         </div>
                         <MoveRight className={`text-neutral-500`} size={28}/>
                     </Button>
-                    <Button className={`flex justify-between items-center w-full `} variant={"secondary"}>
+                    <Button className={`flex bg-secondary/25 hover:bg-secondary/50 justify-between items-center w-full `} variant={"ghost"}>
                         <div className={`flex items-center gap-2`}>
                             <MessageSquareHeart className={`text-primary`} size={28}/>
                             <p className={`font-bold`}>Join Our Community</p>

@@ -1,6 +1,6 @@
 import {arrayRemove, arrayUnion, doc, getDoc, serverTimestamp, setDoc} from "firebase/firestore";
 import {db} from "@/firebase";
-import {MOVIE_LIST_TYPES} from "@/components/shared/movie-card-actions";
+import {MOVIE_LIST_TYPES} from "@/shared/movie-card-actions";
 import {IMovieDetailsResponse, IMovieSendData} from "@/types/Movie";
 import {getActionType} from "@/utils/getActionType";
 import IUser from "@/types/User";

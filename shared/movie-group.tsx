@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import MovieCard from "@/components/shared/movie-card";
+import MovieCard from "@/shared/movie-card";
 import {IMovieResponse} from "@/types/Movie";
 import {cn} from '@/lib/utils';
 import {list_type} from "@/types/Lists";

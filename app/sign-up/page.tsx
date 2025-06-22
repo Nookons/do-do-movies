@@ -1,13 +1,13 @@
 'use client'
 
 import React, {useState} from 'react';
-import {Container} from "@/components/shared/container";
+import {Container} from "@/shared/container";
 import {Button, Checkbox, Input} from "@/components/ui";
 import {LoaderCircle} from "lucide-react";
 import ErrorsList from "@/components/ui/sign-up/ErrorsList";
 import {createNewUser} from "@/utils/createNewUser";
-import SignButtonGroup from "@/components/shared/SignIn/SignButtonGroup";
-import EmailInput from "@/components/shared/SignUp/EmailInput";
+import SignButtonGroup from "@/shared/SignIn/SignButtonGroup";
+import EmailInput from "@/shared/SignUp/EmailInput";
 import {Label} from "@/components/ui/label";
 import Link from "next/link";
 import {useRouter} from "next/navigation";

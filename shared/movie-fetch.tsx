@@ -1,8 +1,8 @@
-import { getMovies } from "@/components/getMovies";
 import IMoviesResponse from "@/types/Movie";
-import MovieGroup from "@/components/shared/movie-group";
+import MovieGroup from "@/shared/movie-group";
 import {Skeleton} from "@/components/ui";
 import {list_type} from "@/types/Lists";
+import { getMovies } from "@/features/getMovies";
 
 interface Props {
     fetch_type: list_type;

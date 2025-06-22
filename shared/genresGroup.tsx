@@ -1,6 +1,6 @@
 'use client'
 import React, {useEffect, useState} from 'react'
-import {FilterCheckbox} from "@/components/shared/filter-checkbox"
+import {FilterCheckbox} from "@/shared/filter-checkbox"
 import {getAllGenres} from "@/utils/Genres/getAllGenres"
 import {Button, Skeleton} from "@/components/ui"
 import {IGenre} from "@/types/Genre"

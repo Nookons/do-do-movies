@@ -1,4 +1,4 @@
-import {MOVIE_LIST_TYPES} from "@/components/shared/movie-card-actions";
+import {MOVIE_LIST_TYPES} from "@/shared/movie-card-actions";
 
 export const getActionType = (type: MOVIE_LIST_TYPES): string => {
     if (type.startsWith("remove_")) {

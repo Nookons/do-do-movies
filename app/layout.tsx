@@ -2,10 +2,10 @@ import type {Metadata} from "next";
 import {Nunito} from "next/font/google";
 import "./globals.css";
 import {ThemeProvider} from "@/components/theme-provider";
-import Header from "@/components/shared/header";
+import Header from "@/shared/header";
 import Providers from "@/components/provider";
 import { Toaster } from "sonner";
-import Footer from "@/components/shared/footer";
+import Footer from "@/shared/footer";
 
 const nunito = Nunito({
     variable: '--font-nunito',

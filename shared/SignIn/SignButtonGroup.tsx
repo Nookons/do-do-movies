@@ -1,6 +1,6 @@
 import React from 'react';
-import GitHubButton from "@/components/shared/SignIn/GitHubButton";
-import GoogleButton from "@/components/shared/SignIn/GoogleButton";
+import GitHubButton from "@/shared/SignIn/GitHubButton";
+import GoogleButton from "@/shared/SignIn/GoogleButton";
 
 const SignButtonGroup = () => {
     return (

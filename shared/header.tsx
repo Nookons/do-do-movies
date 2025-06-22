@@ -1,10 +1,10 @@
 import React from 'react';
 import {cn} from "@/lib/utils";
-import {Container} from "@/components/shared/container";
-import {ModeToggle} from "@/components/ModeToggle/ModeToggle";
+import {Container} from "@/shared/container";
+import {ModeToggle} from "@/shared/ModeToggle/ModeToggle";
 import Image from "next/image";
-import UserButton from "@/components/shared/user-button";
-import UserObserve from "@/components/shared/user-observe";
+import UserButton from "@/shared/user-button";
+import UserObserve from "@/shared/user-observe";
 import Link from "next/link";
 
 interface Props {
